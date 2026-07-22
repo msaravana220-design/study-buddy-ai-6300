@@ -15,7 +15,6 @@ import { Route as StudyPlanRouteImport } from './routes/study-plan'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as QuizRouteImport } from './routes/quiz'
-import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as FlashcardsRouteImport } from './routes/flashcards'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -51,11 +50,6 @@ const QuizRoute = QuizRouteImport.update({
   path: '/quiz',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProfileRoute = ProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -82,7 +76,6 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/flashcards': typeof FlashcardsRoute
   '/login': typeof LoginRoute
-  '/profile': typeof ProfileRoute
   '/quiz': typeof QuizRoute
   '/register': typeof RegisterRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -95,7 +88,6 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/flashcards': typeof FlashcardsRoute
   '/login': typeof LoginRoute
-  '/profile': typeof ProfileRoute
   '/quiz': typeof QuizRoute
   '/register': typeof RegisterRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -109,7 +101,6 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/flashcards': typeof FlashcardsRoute
   '/login': typeof LoginRoute
-  '/profile': typeof ProfileRoute
   '/quiz': typeof QuizRoute
   '/register': typeof RegisterRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -124,7 +115,6 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/flashcards'
     | '/login'
-    | '/profile'
     | '/quiz'
     | '/register'
     | '/sitemap.xml'
@@ -137,7 +127,6 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/flashcards'
     | '/login'
-    | '/profile'
     | '/quiz'
     | '/register'
     | '/sitemap.xml'
@@ -150,7 +139,6 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/flashcards'
     | '/login'
-    | '/profile'
     | '/quiz'
     | '/register'
     | '/sitemap.xml'
@@ -164,7 +152,6 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   FlashcardsRoute: typeof FlashcardsRoute
   LoginRoute: typeof LoginRoute
-  ProfileRoute: typeof ProfileRoute
   QuizRoute: typeof QuizRoute
   RegisterRoute: typeof RegisterRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -217,13 +204,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QuizRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/profile': {
-      id: '/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -260,7 +240,6 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   FlashcardsRoute: FlashcardsRoute,
   LoginRoute: LoginRoute,
-  ProfileRoute: ProfileRoute,
   QuizRoute: QuizRoute,
   RegisterRoute: RegisterRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
