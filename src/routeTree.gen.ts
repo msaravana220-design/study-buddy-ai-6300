@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as UploadRouteImport } from './routes/upload'
 import { Route as SummaryRouteImport } from './routes/summary'
 import { Route as StudyPlanRouteImport } from './routes/study-plan'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as ProfileRouteImport } from './routes/profile'
@@ -33,6 +34,11 @@ const SummaryRoute = SummaryRouteImport.update({
 const StudyPlanRoute = StudyPlanRouteImport.update({
   id: '/study-plan',
   path: '/study-plan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegisterRoute = RegisterRouteImport.update({
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/quiz': typeof QuizRoute
   '/register': typeof RegisterRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/study-plan': typeof StudyPlanRoute
   '/summary': typeof SummaryRoute
   '/upload': typeof UploadRoute
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/quiz': typeof QuizRoute
   '/register': typeof RegisterRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/study-plan': typeof StudyPlanRoute
   '/summary': typeof SummaryRoute
   '/upload': typeof UploadRoute
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/quiz': typeof QuizRoute
   '/register': typeof RegisterRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/study-plan': typeof StudyPlanRoute
   '/summary': typeof SummaryRoute
   '/upload': typeof UploadRoute
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/quiz'
     | '/register'
+    | '/sitemap.xml'
     | '/study-plan'
     | '/summary'
     | '/upload'
@@ -130,6 +140,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/quiz'
     | '/register'
+    | '/sitemap.xml'
     | '/study-plan'
     | '/summary'
     | '/upload'
@@ -142,6 +153,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/quiz'
     | '/register'
+    | '/sitemap.xml'
     | '/study-plan'
     | '/summary'
     | '/upload'
@@ -155,6 +167,7 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   QuizRoute: typeof QuizRoute
   RegisterRoute: typeof RegisterRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StudyPlanRoute: typeof StudyPlanRoute
   SummaryRoute: typeof SummaryRoute
   UploadRoute: typeof UploadRoute
@@ -181,6 +194,13 @@ declare module '@tanstack/react-router' {
       path: '/study-plan'
       fullPath: '/study-plan'
       preLoaderRoute: typeof StudyPlanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register': {
@@ -243,6 +263,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   QuizRoute: QuizRoute,
   RegisterRoute: RegisterRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   StudyPlanRoute: StudyPlanRoute,
   SummaryRoute: SummaryRoute,
   UploadRoute: UploadRoute,
