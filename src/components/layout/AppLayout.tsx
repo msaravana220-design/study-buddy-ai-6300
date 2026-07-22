@@ -7,6 +7,7 @@ import {
   ListChecks,
   CalendarDays,
   GraduationCap,
+  User,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
@@ -18,6 +19,7 @@ const navItems = [
   { to: "/flashcards", label: "Flashcards", icon: Layers },
   { to: "/quiz", label: "Quiz", icon: ListChecks },
   { to: "/study-plan", label: "Study Plan", icon: CalendarDays },
+  { to: "/profile", label: "Profile", icon: User },
 ] as const;
 
 export function AppLayout({ children, title, subtitle }: { children: ReactNode; title: string; subtitle?: string }) {
@@ -72,7 +74,7 @@ export function AppLayout({ children, title, subtitle }: { children: ReactNode; 
 
       {/* Mobile bottom nav */}
       <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-background/95 backdrop-blur md:hidden">
-        <ul className="grid grid-cols-6">
+        <ul className="grid grid-cols-7">
           {navItems.map((item) => {
             const active = pathname === item.to;
             const Icon = item.icon;
