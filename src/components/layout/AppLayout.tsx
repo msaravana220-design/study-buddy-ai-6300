@@ -74,7 +74,7 @@ export function AppLayout({ children, title, subtitle }: { children: ReactNode; 
 
       {/* Mobile bottom nav */}
       <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-background/95 backdrop-blur md:hidden">
-        <ul className="grid grid-cols-6">
+        <ul className="grid grid-cols-7">
           {navItems.map((item) => {
             const active = pathname === item.to;
             const Icon = item.icon;
