@@ -1,168 +1,134 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, Clock, Flame, Target, Upload, Sparkles, Layers, ListChecks } from "lucide-react";
-import {
-  Area,
-  AreaChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-} from "recharts";
+import { Button } from "@/components/ui/button";
+import { FileText, Sparkles, Layers, ListChecks, CalendarDays, Upload } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
     meta: [
       { title: "Dashboard — StudyAI" },
-      { name: "description", content: "Your study overview: streaks, hours, upcoming plans and progress." },
+      { name: "description", content: "Your uploaded materials, AI summaries, flashcards, quizzes, and study plans." },
       { property: "og:title", content: "Dashboard — StudyAI" },
-      { property: "og:description", content: "Overview of your studying." },
+      { property: "og:description", content: "Your StudyAI workspace." },
     ],
   }),
   component: Dashboard,
 });
 
-const chartData = [
-  { day: "Mon", hours: 1.2 },
-  { day: "Tue", hours: 2.4 },
-  { day: "Wed", hours: 1.8 },
-  { day: "Thu", hours: 3.1 },
-  { day: "Fri", hours: 2.2 },
-  { day: "Sat", hours: 4.0 },
-  { day: "Sun", hours: 2.7 },
+const materials = [
+  { title: "Biology — Chapter 4 Notes.pdf", meta: "12 pages · Uploaded today" },
+  { title: "Calculus II Lecture 7.docx", meta: "8 pages · Yesterday" },
+  { title: "WWII Overview.pdf", meta: "20 pages · 3 days ago" },
 ];
 
-const subjects = [
-  { name: "Biology", progress: 78, color: "bg-primary" },
-  { name: "Calculus II", progress: 54, color: "bg-primary-glow" },
-  { name: "World History", progress: 32, color: "bg-chart-4" },
-  { name: "Chemistry", progress: 91, color: "bg-chart-3" },
+const summaries = [
+  { title: "Cell division key points", meta: "Biology · 5 min read" },
+  { title: "Integration techniques", meta: "Calculus II · 7 min read" },
+  { title: "Causes of WWII", meta: "History · 6 min read" },
 ];
 
-const upcoming = [
-  { title: "Cell Biology quiz", when: "Today · 4:00 PM", tag: "Quiz" },
-  { title: "Derivatives flashcards", when: "Tomorrow · 9:00 AM", tag: "Flashcards" },
-  { title: "WWII summary review", when: "Wed · 6:00 PM", tag: "Summary" },
+const flashcardSets = [
+  { title: "Mitosis vs Meiosis", meta: "24 cards" },
+  { title: "Derivatives essentials", meta: "36 cards" },
+  { title: "WWII dates & figures", meta: "18 cards" },
 ];
 
-const quick = [
-  { to: "/upload", label: "Upload notes", icon: Upload },
-  { to: "/summary", label: "AI Summary", icon: Sparkles },
-  { to: "/flashcards", label: "Flashcards", icon: Layers },
-  { to: "/quiz", label: "Take a quiz", icon: ListChecks },
-] as const;
+const quizResults = [
+  { title: "Biology Ch. 4 quiz", meta: "Score 8 / 10" },
+  { title: "Derivatives practice", meta: "Score 12 / 15" },
+  { title: "WWII timeline", meta: "Score 7 / 10" },
+];
+
+const studyPlans = [
+  { title: "Biology midterm plan", meta: "2 weeks · 6 sessions" },
+  { title: "Calculus II review", meta: "10 days · 5 sessions" },
+];
 
 function Dashboard() {
   return (
-    <AppLayout title="Welcome back, Alex" subtitle="Here's what's on your study plan today.">
-      <div className="grid gap-4 md:grid-cols-4">
-        <StatCard icon={Flame} label="Day streak" value="12" hint="Keep it going!" />
-        <StatCard icon={Clock} label="This week" value="17.4h" hint="+2.3h vs last week" />
-        <StatCard icon={BookOpen} label="Active subjects" value="4" hint="2 due this week" />
-        <StatCard icon={Target} label="Weekly goal" value="82%" hint="14 / 17 hrs" />
-      </div>
-
-      <div className="mt-4 grid gap-4 lg:grid-cols-3">
-        <Card className="lg:col-span-2 rounded-2xl border-border shadow-[var(--shadow-soft)]">
-          <CardHeader className="flex-row items-center justify-between">
-            <CardTitle className="text-base font-semibold">Study hours this week</CardTitle>
-            <Badge variant="secondary" className="rounded-full">+18%</Badge>
-          </CardHeader>
-          <CardContent className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={chartData} margin={{ left: -20, right: 8, top: 8, bottom: 0 }}>
-                <defs>
-                  <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="var(--primary)" stopOpacity={0.35} />
-                    <stop offset="100%" stopColor="var(--primary)" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
-                <XAxis dataKey="day" stroke="var(--muted-foreground)" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="var(--muted-foreground)" fontSize={12} tickLine={false} axisLine={false} />
-                <Tooltip contentStyle={{ background: "var(--card)", border: "1px solid var(--border)", borderRadius: 12 }} />
-                <Area type="monotone" dataKey="hours" stroke="var(--primary)" strokeWidth={2.5} fill="url(#g1)" />
-              </AreaChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-2xl border-border shadow-[var(--shadow-soft)]">
-          <CardHeader>
-            <CardTitle className="text-base font-semibold">Quick actions</CardTitle>
-          </CardHeader>
-          <CardContent className="grid grid-cols-2 gap-3">
-            {quick.map((q) => (
-              <Link
-                key={q.to}
-                to={q.to}
-                className="group flex flex-col items-start gap-3 rounded-2xl border border-border bg-card p-4 transition hover:border-primary/40 hover:shadow-[var(--shadow-elegant)]"
-              >
-                <div className="grid h-10 w-10 place-items-center rounded-xl bg-accent text-accent-foreground group-hover:text-primary">
-                  <q.icon className="h-5 w-5" />
-                </div>
-                <span className="text-sm font-medium">{q.label}</span>
-              </Link>
-            ))}
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="mt-4 grid gap-4 lg:grid-cols-3">
-        <Card className="lg:col-span-2 rounded-2xl border-border shadow-[var(--shadow-soft)]">
-          <CardHeader>
-            <CardTitle className="text-base font-semibold">Subject progress</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-5">
-            {subjects.map((s) => (
-              <div key={s.name}>
-                <div className="mb-1.5 flex items-center justify-between text-sm">
-                  <span className="font-medium">{s.name}</span>
-                  <span className="text-muted-foreground">{s.progress}%</span>
-                </div>
-                <Progress value={s.progress} className="h-2 rounded-full" />
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-2xl border-border shadow-[var(--shadow-soft)]">
-          <CardHeader>
-            <CardTitle className="text-base font-semibold">Upcoming</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {upcoming.map((u) => (
-              <div key={u.title} className="flex items-start justify-between gap-3 rounded-xl border border-border bg-background p-3">
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-medium">{u.title}</p>
-                  <p className="mt-0.5 text-xs text-muted-foreground">{u.when}</p>
-                </div>
-                <Badge variant="outline" className="shrink-0 rounded-full">{u.tag}</Badge>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
+    <AppLayout title="Dashboard" subtitle="Your study materials, summaries, flashcards, quizzes and plans.">
+      <div className="grid gap-4 lg:grid-cols-2">
+        <SectionCard
+          icon={FileText}
+          title="Uploaded materials"
+          action={{ to: "/upload", label: "Upload" }}
+          items={materials}
+          emptyIcon={Upload}
+        />
+        <SectionCard
+          icon={Sparkles}
+          title="Recent AI summaries"
+          action={{ to: "/summary", label: "View all" }}
+          items={summaries}
+        />
+        <SectionCard
+          icon={Layers}
+          title="Flashcard sets"
+          action={{ to: "/flashcards", label: "Open" }}
+          items={flashcardSets}
+        />
+        <SectionCard
+          icon={ListChecks}
+          title="Quiz results"
+          action={{ to: "/quiz", label: "New quiz" }}
+          items={quizResults}
+        />
+        <SectionCard
+          icon={CalendarDays}
+          title="Study plans"
+          action={{ to: "/study-plan", label: "View plans" }}
+          items={studyPlans}
+          className="lg:col-span-2"
+        />
       </div>
     </AppLayout>
   );
 }
 
-function StatCard({ icon: Icon, label, value, hint }: { icon: React.ComponentType<{ className?: string }>; label: string; value: string; hint: string }) {
+type Action = { to: "/upload" | "/summary" | "/flashcards" | "/quiz" | "/study-plan"; label: string };
+
+function SectionCard({
+  icon: Icon,
+  title,
+  action,
+  items,
+  className,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  action: Action;
+  items: { title: string; meta: string }[];
+  emptyIcon?: React.ComponentType<{ className?: string }>;
+  className?: string;
+}) {
   return (
-    <Card className="rounded-2xl border-border shadow-[var(--shadow-soft)]">
-      <CardContent className="flex items-center gap-4 p-5">
-        <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl" style={{ background: "var(--gradient-soft)" }}>
-          <Icon className="h-5 w-5 text-primary" />
-        </div>
-        <div className="min-w-0">
-          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{label}</p>
-          <p className="mt-0.5 text-xl font-semibold">{value}</p>
-          <p className="text-xs text-muted-foreground">{hint}</p>
-        </div>
+    <Card className={`rounded-2xl border-border shadow-[var(--shadow-soft)] ${className ?? ""}`}>
+      <CardHeader className="flex-row items-center justify-between">
+        <CardTitle className="flex items-center gap-2 text-base font-semibold">
+          <span className="grid h-8 w-8 place-items-center rounded-lg" style={{ background: "var(--gradient-soft)" }}>
+            <Icon className="h-4 w-4 text-primary" />
+          </span>
+          {title}
+        </CardTitle>
+        <Button asChild variant="ghost" size="sm" className="rounded-full">
+          <Link to={action.to}>{action.label}</Link>
+        </Button>
+      </CardHeader>
+      <CardContent className="space-y-2">
+        {items.map((it) => (
+          <div
+            key={it.title}
+            className="flex items-start justify-between gap-3 rounded-xl border border-border bg-background p-3"
+          >
+            <div className="min-w-0">
+              <p className="truncate text-sm font-medium">{it.title}</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">{it.meta}</p>
+            </div>
+            <Badge variant="outline" className="shrink-0 rounded-full">Open</Badge>
+          </div>
+        ))}
       </CardContent>
     </Card>
   );
