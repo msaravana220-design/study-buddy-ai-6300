@@ -7,6 +7,7 @@ import {
   ListChecks,
   CalendarDays,
   GraduationCap,
+  User,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
@@ -18,6 +19,7 @@ const navItems = [
   { to: "/flashcards", label: "Flashcards", icon: Layers },
   { to: "/quiz", label: "Quiz", icon: ListChecks },
   { to: "/study-plan", label: "Study Plan", icon: CalendarDays },
+  { to: "/profile", label: "Profile", icon: User },
 ] as const;
 
 export function AppLayout({ children, title, subtitle }: { children: ReactNode; title: string; subtitle?: string }) {
