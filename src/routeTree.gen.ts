@@ -9,33 +9,19 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as UploadRouteImport } from './routes/upload'
-import { Route as SummaryRouteImport } from './routes/summary'
-import { Route as StudyPlanRouteImport } from './routes/study-plan'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RegisterRouteImport } from './routes/register'
-import { Route as QuizRouteImport } from './routes/quiz'
-import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as FlashcardsRouteImport } from './routes/flashcards'
-import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedUploadRouteImport } from './routes/_authenticated/upload'
+import { Route as AuthenticatedSummaryRouteImport } from './routes/_authenticated/summary'
+import { Route as AuthenticatedStudyPlanRouteImport } from './routes/_authenticated/study-plan'
+import { Route as AuthenticatedQuizRouteImport } from './routes/_authenticated/quiz'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedFlashcardsRouteImport } from './routes/_authenticated/flashcards'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 
-const UploadRoute = UploadRouteImport.update({
-  id: '/upload',
-  path: '/upload',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SummaryRoute = SummaryRouteImport.update({
-  id: '/summary',
-  path: '/summary',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StudyPlanRoute = StudyPlanRouteImport.update({
-  id: '/study-plan',
-  path: '/study-plan',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -46,29 +32,13 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
-const QuizRoute = QuizRouteImport.update({
-  id: '/quiz',
-  path: '/quiz',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProfileRoute = ProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FlashcardsRoute = FlashcardsRouteImport.update({
-  id: '/flashcards',
-  path: '/flashcards',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -76,126 +46,136 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedUploadRoute = AuthenticatedUploadRouteImport.update({
+  id: '/upload',
+  path: '/upload',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSummaryRoute = AuthenticatedSummaryRouteImport.update({
+  id: '/summary',
+  path: '/summary',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedStudyPlanRoute = AuthenticatedStudyPlanRouteImport.update({
+  id: '/study-plan',
+  path: '/study-plan',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedQuizRoute = AuthenticatedQuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedFlashcardsRoute = AuthenticatedFlashcardsRouteImport.update({
+  id: '/flashcards',
+  path: '/flashcards',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
-  '/flashcards': typeof FlashcardsRoute
   '/login': typeof LoginRoute
-  '/profile': typeof ProfileRoute
-  '/quiz': typeof QuizRoute
   '/register': typeof RegisterRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/study-plan': typeof StudyPlanRoute
-  '/summary': typeof SummaryRoute
-  '/upload': typeof UploadRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/flashcards': typeof AuthenticatedFlashcardsRoute
+  '/profile': typeof AuthenticatedProfileRoute
+  '/quiz': typeof AuthenticatedQuizRoute
+  '/study-plan': typeof AuthenticatedStudyPlanRoute
+  '/summary': typeof AuthenticatedSummaryRoute
+  '/upload': typeof AuthenticatedUploadRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
-  '/flashcards': typeof FlashcardsRoute
   '/login': typeof LoginRoute
-  '/profile': typeof ProfileRoute
-  '/quiz': typeof QuizRoute
   '/register': typeof RegisterRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/study-plan': typeof StudyPlanRoute
-  '/summary': typeof SummaryRoute
-  '/upload': typeof UploadRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/flashcards': typeof AuthenticatedFlashcardsRoute
+  '/profile': typeof AuthenticatedProfileRoute
+  '/quiz': typeof AuthenticatedQuizRoute
+  '/study-plan': typeof AuthenticatedStudyPlanRoute
+  '/summary': typeof AuthenticatedSummaryRoute
+  '/upload': typeof AuthenticatedUploadRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
-  '/flashcards': typeof FlashcardsRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/login': typeof LoginRoute
-  '/profile': typeof ProfileRoute
-  '/quiz': typeof QuizRoute
   '/register': typeof RegisterRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/study-plan': typeof StudyPlanRoute
-  '/summary': typeof SummaryRoute
-  '/upload': typeof UploadRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/flashcards': typeof AuthenticatedFlashcardsRoute
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/_authenticated/quiz': typeof AuthenticatedQuizRoute
+  '/_authenticated/study-plan': typeof AuthenticatedStudyPlanRoute
+  '/_authenticated/summary': typeof AuthenticatedSummaryRoute
+  '/_authenticated/upload': typeof AuthenticatedUploadRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/dashboard'
-    | '/flashcards'
     | '/login'
-    | '/profile'
-    | '/quiz'
     | '/register'
     | '/sitemap.xml'
+    | '/dashboard'
+    | '/flashcards'
+    | '/profile'
+    | '/quiz'
     | '/study-plan'
     | '/summary'
     | '/upload'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/dashboard'
-    | '/flashcards'
     | '/login'
-    | '/profile'
-    | '/quiz'
     | '/register'
     | '/sitemap.xml'
+    | '/dashboard'
+    | '/flashcards'
+    | '/profile'
+    | '/quiz'
     | '/study-plan'
     | '/summary'
     | '/upload'
   id:
     | '__root__'
     | '/'
-    | '/dashboard'
-    | '/flashcards'
+    | '/_authenticated'
     | '/login'
-    | '/profile'
-    | '/quiz'
     | '/register'
     | '/sitemap.xml'
-    | '/study-plan'
-    | '/summary'
-    | '/upload'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/flashcards'
+    | '/_authenticated/profile'
+    | '/_authenticated/quiz'
+    | '/_authenticated/study-plan'
+    | '/_authenticated/summary'
+    | '/_authenticated/upload'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DashboardRoute: typeof DashboardRoute
-  FlashcardsRoute: typeof FlashcardsRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
-  ProfileRoute: typeof ProfileRoute
-  QuizRoute: typeof QuizRoute
   RegisterRoute: typeof RegisterRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  StudyPlanRoute: typeof StudyPlanRoute
-  SummaryRoute: typeof SummaryRoute
-  UploadRoute: typeof UploadRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/upload': {
-      id: '/upload'
-      path: '/upload'
-      fullPath: '/upload'
-      preLoaderRoute: typeof UploadRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/summary': {
-      id: '/summary'
-      path: '/summary'
-      fullPath: '/summary'
-      preLoaderRoute: typeof SummaryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/study-plan': {
-      id: '/study-plan'
-      path: '/study-plan'
-      fullPath: '/study-plan'
-      preLoaderRoute: typeof StudyPlanRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -210,20 +190,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/quiz': {
-      id: '/quiz'
-      path: '/quiz'
-      fullPath: '/quiz'
-      preLoaderRoute: typeof QuizRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/profile': {
-      id: '/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -231,18 +197,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/flashcards': {
-      id: '/flashcards'
-      path: '/flashcards'
-      fullPath: '/flashcards'
-      preLoaderRoute: typeof FlashcardsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -252,21 +211,87 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/upload': {
+      id: '/_authenticated/upload'
+      path: '/upload'
+      fullPath: '/upload'
+      preLoaderRoute: typeof AuthenticatedUploadRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/summary': {
+      id: '/_authenticated/summary'
+      path: '/summary'
+      fullPath: '/summary'
+      preLoaderRoute: typeof AuthenticatedSummaryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/study-plan': {
+      id: '/_authenticated/study-plan'
+      path: '/study-plan'
+      fullPath: '/study-plan'
+      preLoaderRoute: typeof AuthenticatedStudyPlanRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/quiz': {
+      id: '/_authenticated/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof AuthenticatedQuizRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/flashcards': {
+      id: '/_authenticated/flashcards'
+      path: '/flashcards'
+      fullPath: '/flashcards'
+      preLoaderRoute: typeof AuthenticatedFlashcardsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedFlashcardsRoute: typeof AuthenticatedFlashcardsRoute
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedQuizRoute: typeof AuthenticatedQuizRoute
+  AuthenticatedStudyPlanRoute: typeof AuthenticatedStudyPlanRoute
+  AuthenticatedSummaryRoute: typeof AuthenticatedSummaryRoute
+  AuthenticatedUploadRoute: typeof AuthenticatedUploadRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedFlashcardsRoute: AuthenticatedFlashcardsRoute,
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedQuizRoute: AuthenticatedQuizRoute,
+  AuthenticatedStudyPlanRoute: AuthenticatedStudyPlanRoute,
+  AuthenticatedSummaryRoute: AuthenticatedSummaryRoute,
+  AuthenticatedUploadRoute: AuthenticatedUploadRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DashboardRoute: DashboardRoute,
-  FlashcardsRoute: FlashcardsRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   LoginRoute: LoginRoute,
-  ProfileRoute: ProfileRoute,
-  QuizRoute: QuizRoute,
   RegisterRoute: RegisterRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  StudyPlanRoute: StudyPlanRoute,
-  SummaryRoute: SummaryRoute,
-  UploadRoute: UploadRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

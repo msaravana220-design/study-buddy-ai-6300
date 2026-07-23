@@ -1,5 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,7 +11,7 @@ import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { Mail, GraduationCap, LogOut } from "lucide-react";
 
-export const Route = createFileRoute("/profile")({
+export const Route = createFileRoute("/_authenticated/profile")({
   head: () => ({
     meta: [
       { title: "Profile — StudyAI" },
@@ -22,11 +24,22 @@ export const Route = createFileRoute("/profile")({
 });
 
 function ProfilePage() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [name, setName] = useState("Alex Morgan");
   const [email, setEmail] = useState("alex.morgan@studyai.app");
   const [school, setSchool] = useState("Northfield University");
   const [emailNotif, setEmailNotif] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
+
+  async function handleSignOut() {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/login", replace: true });
+  }
+
+
 
   return (
     <AppLayout title="Profile" subtitle="Your account and preferences">
@@ -48,7 +61,7 @@ function ProfilePage() {
                 <GraduationCap className="h-3.5 w-3.5" /> {school}
               </p>
             </div>
-            <Button variant="outline" className="w-full rounded-xl">
+            <Button variant="outline" className="w-full rounded-xl" onClick={handleSignOut}>
               <LogOut className="mr-2 h-4 w-4" /> Sign out
             </Button>
           </CardContent>

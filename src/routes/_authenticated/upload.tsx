@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Upload, FileText, Image as ImageIcon, FileType, Trash2 } from "lucide-react";
 
-export const Route = createFileRoute("/upload")({
+export const Route = createFileRoute("/_authenticated/upload")({
   head: () => ({
     meta: [
       { title: "Upload Study Material — StudyAI" },

@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { CheckCircle2 } from "lucide-react";
 
-export const Route = createFileRoute("/quiz")({
+export const Route = createFileRoute("/_authenticated/quiz")({
   head: () => ({
     meta: [
       { title: "Quiz — StudyAI" },
