@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ChevronLeft, ChevronRight, RotateCcw, Check, X } from "lucide-react";
 
-export const Route = createFileRoute("/flashcards")({
+export const Route = createFileRoute("/_authenticated/flashcards")({
   head: () => ({
     meta: [
       { title: "Flashcards — StudyAI" },

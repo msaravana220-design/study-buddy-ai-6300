@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Clock } from "lucide-react";
 
-export const Route = createFileRoute("/study-plan")({
+export const Route = createFileRoute("/_authenticated/study-plan")({
   head: () => ({
     meta: [
       { title: "Study Plan — StudyAI" },

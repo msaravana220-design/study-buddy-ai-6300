@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Copy, Download } from "lucide-react";
 
-export const Route = createFileRoute("/summary")({
+export const Route = createFileRoute("/_authenticated/summary")({
   head: () => ({
     meta: [
       { title: "AI Summary — StudyAI" },
