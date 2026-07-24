@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,9 @@ import {
   Upload,
   ArrowRight,
   Plus,
+  Loader2,
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
@@ -25,12 +28,14 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
   component: Dashboard,
 });
 
-const overview = [
-  { label: "Materials", value: 12, icon: FileText, to: "/upload" as const, tint: "from-blue-500/15 to-blue-500/5" },
-  { label: "Summaries", value: 8, icon: Sparkles, to: "/summary" as const, tint: "from-violet-500/15 to-violet-500/5" },
-  { label: "Flashcard sets", value: 5, icon: Layers, to: "/flashcards" as const, tint: "from-indigo-500/15 to-indigo-500/5" },
-  { label: "Quizzes taken", value: 9, icon: ListChecks, to: "/quiz" as const, tint: "from-fuchsia-500/15 to-fuchsia-500/5" },
-];
+type Material = {
+  id: string;
+  title: string;
+  subject: string;
+  file_name: string | null;
+  file_type: string | null;
+  created_at: string;
+};
 
 const quickActions = [
   { to: "/upload" as const, label: "Upload material", desc: "PDF, DOCX or notes", icon: Upload },
@@ -39,11 +44,6 @@ const quickActions = [
   { to: "/quiz" as const, label: "Start a quiz", desc: "Test your knowledge", icon: ListChecks },
 ];
 
-const latestMaterials = [
-  { title: "Biology — Chapter 4 Notes.pdf", meta: "12 pages · Today" },
-  { title: "Calculus II Lecture 7.docx", meta: "8 pages · Yesterday" },
-  { title: "WWII Overview.pdf", meta: "20 pages · 3d ago" },
-];
 
 const latestSummaries = [
   { title: "Cell division key points", meta: "Biology · 5 min read" },
@@ -63,6 +63,28 @@ const activePlan = {
 };
 
 function Dashboard() {
+  const [materials, setMaterials] = useState<Material[]>([]);
+  const [materialsLoading, setMaterialsLoading] = useState(true);
+
+  useEffect(() => {
+    supabase
+      .from("study_materials")
+      .select("id, title, subject, file_name, file_type, created_at")
+      .order("created_at", { ascending: false })
+      .limit(5)
+      .then(({ data }) => {
+        setMaterials((data as Material[]) ?? []);
+        setMaterialsLoading(false);
+      });
+  }, []);
+
+  const overview = [
+    { label: "Materials", value: materials.length, icon: FileText, to: "/upload" as const, tint: "from-blue-500/15 to-blue-500/5" },
+    { label: "Summaries", value: 0, icon: Sparkles, to: "/summary" as const, tint: "from-violet-500/15 to-violet-500/5" },
+    { label: "Flashcard sets", value: 0, icon: Layers, to: "/flashcards" as const, tint: "from-indigo-500/15 to-indigo-500/5" },
+    { label: "Quizzes taken", value: 0, icon: ListChecks, to: "/quiz" as const, tint: "from-fuchsia-500/15 to-fuchsia-500/5" },
+  ];
+
   return (
     <AppLayout title="Welcome back 👋" subtitle="Pick up where you left off or start something new.">
       {/* Hero */}
@@ -151,10 +173,26 @@ function Dashboard() {
             </Button>
           </CardHeader>
           <CardContent className="space-y-2">
-            {latestMaterials.map((it) => (
-              <Row key={it.title} title={it.title} meta={it.meta} />
-            ))}
+            {materialsLoading ? (
+              <div className="py-6 text-center text-sm text-muted-foreground">
+                <Loader2 className="mx-auto h-4 w-4 animate-spin" />
+              </div>
+            ) : materials.length === 0 ? (
+              <div className="rounded-xl border border-dashed border-border p-4 text-center text-sm text-muted-foreground">
+                No uploads yet.{" "}
+                <Link to="/upload" className="font-medium text-primary hover:underline">Add your first material</Link>.
+              </div>
+            ) : (
+              materials.map((it) => (
+                <Row
+                  key={it.id}
+                  title={it.title}
+                  meta={`${it.subject}${it.file_type ? ` · ${it.file_type}` : " · Text"} · ${new Date(it.created_at).toLocaleDateString()}`}
+                />
+              ))
+            )}
           </CardContent>
+
         </Card>
 
         <Card
