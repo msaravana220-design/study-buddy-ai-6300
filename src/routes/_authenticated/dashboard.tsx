@@ -63,6 +63,28 @@ const activePlan = {
 };
 
 function Dashboard() {
+  const [materials, setMaterials] = useState<Material[]>([]);
+  const [materialsLoading, setMaterialsLoading] = useState(true);
+
+  useEffect(() => {
+    supabase
+      .from("study_materials")
+      .select("id, title, subject, file_name, file_type, created_at")
+      .order("created_at", { ascending: false })
+      .limit(5)
+      .then(({ data }) => {
+        setMaterials((data as Material[]) ?? []);
+        setMaterialsLoading(false);
+      });
+  }, []);
+
+  const overview = [
+    { label: "Materials", value: materials.length, icon: FileText, to: "/upload" as const, tint: "from-blue-500/15 to-blue-500/5" },
+    { label: "Summaries", value: 0, icon: Sparkles, to: "/summary" as const, tint: "from-violet-500/15 to-violet-500/5" },
+    { label: "Flashcard sets", value: 0, icon: Layers, to: "/flashcards" as const, tint: "from-indigo-500/15 to-indigo-500/5" },
+    { label: "Quizzes taken", value: 0, icon: ListChecks, to: "/quiz" as const, tint: "from-fuchsia-500/15 to-fuchsia-500/5" },
+  ];
+
   return (
     <AppLayout title="Welcome back 👋" subtitle="Pick up where you left off or start something new.">
       {/* Hero */}
