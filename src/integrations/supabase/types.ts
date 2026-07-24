@@ -14,7 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      study_materials: {
+        Row: {
+          content: string
+          created_at: string
+          file_name: string | null
+          file_type: string | null
+          file_url: string | null
+          id: string
+          subject: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content?: string
+          created_at?: string
+          file_name?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          subject: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          file_name?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string
+          subject?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
