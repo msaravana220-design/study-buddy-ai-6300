@@ -173,10 +173,26 @@ function Dashboard() {
             </Button>
           </CardHeader>
           <CardContent className="space-y-2">
-            {latestMaterials.map((it) => (
-              <Row key={it.title} title={it.title} meta={it.meta} />
-            ))}
+            {materialsLoading ? (
+              <div className="py-6 text-center text-sm text-muted-foreground">
+                <Loader2 className="mx-auto h-4 w-4 animate-spin" />
+              </div>
+            ) : materials.length === 0 ? (
+              <div className="rounded-xl border border-dashed border-border p-4 text-center text-sm text-muted-foreground">
+                No uploads yet.{" "}
+                <Link to="/upload" className="font-medium text-primary hover:underline">Add your first material</Link>.
+              </div>
+            ) : (
+              materials.map((it) => (
+                <Row
+                  key={it.id}
+                  title={it.title}
+                  meta={`${it.subject}${it.file_type ? ` · ${it.file_type}` : " · Text"} · ${new Date(it.created_at).toLocaleDateString()}`}
+                />
+              ))
+            )}
           </CardContent>
+
         </Card>
 
         <Card
