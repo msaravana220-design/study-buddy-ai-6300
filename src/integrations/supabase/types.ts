@@ -14,6 +14,50 @@ export type Database = {
   }
   public: {
     Tables: {
+      flashcards: {
+        Row: {
+          answer: string
+          created_at: string
+          id: string
+          material_id: string
+          position: number
+          question: string
+          topic: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          answer: string
+          created_at?: string
+          id?: string
+          material_id: string
+          position?: number
+          question: string
+          topic?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          answer?: string
+          created_at?: string
+          id?: string
+          material_id?: string
+          position?: number
+          question?: string
+          topic?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "flashcards_material_id_fkey"
+            columns: ["material_id"]
+            isOneToOne: false
+            referencedRelation: "study_materials"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       study_materials: {
         Row: {
           content: string
