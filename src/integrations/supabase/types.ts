@@ -53,6 +53,50 @@ export type Database = {
         }
         Relationships: []
       }
+      summaries: {
+        Row: {
+          created_at: string
+          definitions: Json
+          id: string
+          key_concepts: Json
+          material_id: string
+          overview: string
+          revision_notes: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          definitions?: Json
+          id?: string
+          key_concepts?: Json
+          material_id: string
+          overview?: string
+          revision_notes?: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          definitions?: Json
+          id?: string
+          key_concepts?: Json
+          material_id?: string
+          overview?: string
+          revision_notes?: Json
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "summaries_material_id_fkey"
+            columns: ["material_id"]
+            isOneToOne: false
+            referencedRelation: "study_materials"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
