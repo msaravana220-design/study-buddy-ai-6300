@@ -1,0 +1,5 @@
+[build]
+cmds = ["npm run build", "mkdir -p dist && cp -r .output/public/* dist/ 2>/dev/null || true"]
+
+[start]
+cmd = "node .output/server/index.mjs"
