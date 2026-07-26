@@ -25,10 +25,10 @@ ENV SUPABASE_PUBLISHABLE_KEY=${SUPABASE_PUBLISHABLE_KEY}
 ENV GROQ_API_KEY=${GROQ_API_KEY}
 ENV SUPABASE_PROJECT_ID=${SUPABASE_PROJECT_ID}
 
-# Vite strictly requires VITE_ prefixed variables for the browser bundle
-ENV VITE_SUPABASE_URL=${SUPABASE_URL}
-ENV VITE_SUPABASE_PUBLISHABLE_KEY=${SUPABASE_PUBLISHABLE_KEY}
-ENV VITE_SUPABASE_PROJECT_ID=${SUPABASE_PROJECT_ID}
+# Create a .env file dynamically so Vite loads these variables reliably during build
+RUN echo "VITE_SUPABASE_URL=$SUPABASE_URL" >> .env
+RUN echo "VITE_SUPABASE_PUBLISHABLE_KEY=$SUPABASE_PUBLISHABLE_KEY" >> .env
+RUN echo "VITE_SUPABASE_PROJECT_ID=$SUPABASE_PROJECT_ID" >> .env
 
 RUN npm run build
 # Create dist directory from .output/public to satisfy build tools expecting a dist directory
