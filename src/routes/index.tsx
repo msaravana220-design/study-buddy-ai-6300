@@ -5,9 +5,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "StudyAI — Your AI Study Companion" },
-      { name: "description", content: "Turn notes into AI summaries, flashcards and quizzes. Study smarter with StudyAI." },
+      { name: "description", content: "AI-powered study platform to upload notes, generate summaries, flashcards, and quizzes for smarter learning and efficient exam preparation." },
       { property: "og:title", content: "StudyAI — Your AI Study Companion" },
-      { property: "og:description", content: "Turn notes into AI summaries, flashcards and quizzes." },
+      { property: "og:description", content: "AI-powered study platform to upload notes, generate summaries, flashcards, and quizzes for smarter learning and efficient exam preparation." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
