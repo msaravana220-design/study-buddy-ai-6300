@@ -59,8 +59,14 @@ export const generateQuiz = createServerFn({ method: "POST" })
     const rawText = await extractText(material, supabase);
     const clipped = rawText.slice(0, 60000);
 
-    const apiKey = process.env.LOVABLE_API_KEY;
-    if (!apiKey) throw new Error("Missing LOVABLE_API_KEY.");
+    const apiKey = process.env.GROQ_API_KEY || process.env.GROK_API_KEY || process.env.XAI_API_KEY || process.env.LOVABLE_API_KEY;
+    if (!apiKey) throw new Error("Missing GROQ_API_KEY environment variable.");
+
+    const isGroq = apiKey.startsWith("gsk_");
+    const endpoint = isGroq
+      ? "https://api.groq.com/openai/v1/chat/completions"
+      : "https://api.x.ai/v1/chat/completions";
+    const model = isGroq ? "llama-3.3-70b-versatile" : "grok-2-latest";
 
     const typeInstructions: Record<QuizType, string> = {
       mcq: `Each question must include:\n- question: string\n- options: string[] of exactly 4 plausible options\n- answer: string that EXACTLY matches one of the options\n- explanation: 1-2 sentence explanation of why the answer is correct`,
@@ -71,11 +77,11 @@ export const generateQuiz = createServerFn({ method: "POST" })
     const systemPrompt = `You are an expert exam writer. Generate high-quality quiz questions strictly grounded in the source material. Respond ONLY with JSON.`;
     const userPrompt = `Source title: ${material.title}\nSubject: ${material.subject}\nQuiz type: ${data.quizType}\nNumber of questions: ${num}\n\nSOURCE MATERIAL:\n"""\n${clipped}\n"""\n\nReturn JSON: { "questions": [ ... ${num} items ... ] }.\n${typeInstructions[data.quizType]}`;
 
-    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const res = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        model,
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt },

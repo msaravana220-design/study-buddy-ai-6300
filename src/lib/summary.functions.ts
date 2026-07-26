@@ -67,20 +67,26 @@ export const generateSummary = createServerFn({ method: "POST" })
     // Guard token size
     const clipped = rawText.slice(0, 60000);
 
-    const apiKey = process.env.LOVABLE_API_KEY;
-    if (!apiKey) throw new Error("Missing LOVABLE_API_KEY.");
+    const apiKey = process.env.GROQ_API_KEY || process.env.GROK_API_KEY || process.env.XAI_API_KEY || process.env.LOVABLE_API_KEY;
+    if (!apiKey) throw new Error("Missing GROQ_API_KEY environment variable.");
+
+    const isGroq = apiKey.startsWith("gsk_");
+    const endpoint = isGroq
+      ? "https://api.groq.com/openai/v1/chat/completions"
+      : "https://api.x.ai/v1/chat/completions";
+    const model = isGroq ? "llama-3.3-70b-versatile" : "grok-2-latest";
 
     const systemPrompt = `You are an expert study coach. Produce a rigorous, well-structured study summary from the provided source material. Respond ONLY with JSON matching the given schema. Be concise but comprehensive.`;
     const userPrompt = `Source title: ${material.title}\nSubject: ${material.subject}\n\nSOURCE MATERIAL:\n"""\n${clipped}\n"""\n\nReturn a JSON object with fields:\n- overview: string (3-6 sentence high-level summary)\n- key_concepts: string[] (5-10 concise bullet points)\n- definitions: { term: string, definition: string }[] (5-10 important terms)\n- revision_notes: string[] (5-10 short actionable revision notes)`;
 
-    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const res = await fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        model,
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt },
