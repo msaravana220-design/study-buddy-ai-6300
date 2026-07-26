@@ -1,5 +1,7 @@
 [build]
-cmds = ["npm run build", "mkdir -p dist && cp -r .output/public/* dist/ 2>/dev/null || true"]
-
+cmds = [
+  "export VITE_SUPABASE_URL=$SUPABASE_URL && export VITE_SUPABASE_PUBLISHABLE_KEY=$SUPABASE_PUBLISHABLE_KEY && export VITE_SUPABASE_PROJECT_ID=$SUPABASE_PROJECT_ID && npm run build",
+  "mkdir -p dist && cp -r .output/public/* dist/ 2>/dev/null || true"
+]
 [start]
 cmd = "node .output/server/index.mjs"
