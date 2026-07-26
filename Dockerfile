@@ -12,6 +12,19 @@ FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NODE_ENV=production
+
+# Railway injects variables as build ARGs. We must declare them to use them during build.
+ARG SUPABASE_URL
+ENV SUPABASE_URL=$SUPABASE_URL
+ARG SUPABASE_PUBLISHABLE_KEY
+ENV SUPABASE_PUBLISHABLE_KEY=$SUPABASE_PUBLISHABLE_KEY
+ARG GROQ_API_KEY
+ENV GROQ_API_KEY=$GROQ_API_KEY
+ARG VITE_SUPABASE_URL=$SUPABASE_URL
+ENV VITE_SUPABASE_URL=$VITE_SUPABASE_URL
+ARG VITE_SUPABASE_PUBLISHABLE_KEY=$SUPABASE_PUBLISHABLE_KEY
+ENV VITE_SUPABASE_PUBLISHABLE_KEY=$VITE_SUPABASE_PUBLISHABLE_KEY
+
 RUN npm run build
 # Create dist directory from .output/public to satisfy build tools expecting a dist directory
 RUN mkdir -p dist && cp -r .output/public/* dist/ 2>/dev/null || true
